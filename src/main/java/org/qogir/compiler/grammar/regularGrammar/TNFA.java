@@ -44,7 +44,7 @@ public class TNFA extends FiniteAutomaton {
     }
 
     //NFA连接操作
-    public void link(TNFA another_nfa){
+    public void concat(TNFA another_nfa){
         this.transitTable.merge(another_nfa.transitTable);
         //添加连接边
         this.transitTable.addEdge(this.getAcceptingState(), another_nfa.getStartState(), 'ε');
