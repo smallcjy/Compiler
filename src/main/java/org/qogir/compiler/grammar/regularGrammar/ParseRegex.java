@@ -1,5 +1,7 @@
 package org.qogir.compiler.grammar.regularGrammar;
 
+import org.qogir.compiler.util.tree.DefaultTreeNode;
+
 import java.util.ArrayDeque;
 import java.util.Stack;
 
@@ -291,4 +293,7 @@ public class ParseRegex {
         }
         return pt;
     }
+
+
+
 }

@@ -53,4 +53,6 @@ public class RegexTreeNode extends DefaultTreeNode {
     public String toString() {
         return this.value + ":" + this.type;
     }
+
 }
+

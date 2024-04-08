@@ -1,7 +1,9 @@
 package org.qogir.compiler.grammar.regularGrammar.scanner;
 
-import org.qogir.compiler.grammar.regularGrammar.RegularGrammar;
+import org.qogir.compiler.grammar.regularGrammar.*;
 import org.qogir.simulation.scanner.Scanner;
+
+import java.io.PipedOutputStream;
 
 public class ScannerTest {
     public static void main(String[] args) {
@@ -18,9 +20,30 @@ public class ScannerTest {
         //test constructing the regex tree
         System.out.println(scanner.constructRegexTrees().toString());
 
-        //System.out.println("Show the NFA:");
-        //test constructing the NFA
-        //System.out.println(scanner.constructNFA().toString());
+        //test constructing the post traversal result
+        String str = new String("regex2 := c(a|b)*");
+        Regex regex1 = new Regex("regex2", "c(a|b)*", 1);
+        ParseRegex pr = new ParseRegex(regex1);
+        RegexTree rt = pr.parse();
+        RegexTreeNode rtn = rt.getRoot();
+        System.out.println(rtn);
+        rtn.postTraversal(rtn);
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        System.out.println("Show the NFA:");
+////        test constructing the NFA
+//        System.out.println(scanner.constructNFA().toString());
 
         //System.out.println("Show the DFA:");
         //test constructing the DFA
