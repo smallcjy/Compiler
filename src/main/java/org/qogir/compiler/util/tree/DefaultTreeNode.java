@@ -39,28 +39,9 @@ public class DefaultTreeNode implements Serializable {
         return nextSibling;
     }
 
-
-    // 成员变量作为后序遍历得到的字符串
-    private StringBuilder sb = new StringBuilder();
-
-    public StringBuilder postTraversal(DefaultTreeNode node) {
-        if (node != null) {
-            if (node.getFirstChild() != null) {
-                postTraversal(node.getFirstChild());
-            }
-            if (node.getNextSibling() != null) {
-                postTraversal(node.getNextSibling());
-            }
-            sb.append(node);
-        }
-        return sb;
-    }
 }
 
-//        postTraversal(node.getFirstChild());
-//        postTraversal(node.getNextSibling());
-//        sb.append(node);
-//        return sb;
+
 
 
 
