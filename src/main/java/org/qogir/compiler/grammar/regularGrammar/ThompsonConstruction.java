@@ -105,6 +105,7 @@ public class ThompsonConstruction {
                 TNFA leftTnfa = stack.pop();
                 leftTnfa.concat(rightTnfa);
                 stack.push(leftTnfa);
+                //djasongoaso
             }
             case 2 -> { // node is union
                 TNFA rightTnfa = stack.pop();
