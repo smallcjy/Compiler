@@ -10,13 +10,13 @@ public class RegexTreeNode extends DefaultTreeNode {
     private Character value;
     private int type; //0-basic；1-concatenation；2-union； 3-kleene closure; 4-leftParenthesis; 5-rightParenthesis
 
-    public RegexTreeNode(Character ch, int t){
+    public RegexTreeNode(Character ch, int t) {
         super();
         value = ch;
         type = t;
     }
 
-    public RegexTreeNode(char v, int type, RegexTreeNode firstChild, RegexTreeNode nextSibling){
+    public RegexTreeNode(char v, int type, RegexTreeNode firstChild, RegexTreeNode nextSibling) {
         super(firstChild, nextSibling);
         this.value = v;
         this.type = type;
@@ -38,19 +38,34 @@ public class RegexTreeNode extends DefaultTreeNode {
         return type;
     }
 
-    public RegexTreeNode getLastChild(){
+    public RegexTreeNode getLastChild() {
 
         RegexTreeNode theNode = (RegexTreeNode) this.getFirstChild();
-        if(theNode != null) { //the firstChild is not the last child.
+        if (theNode != null) { //the firstChild is not the last child.
             while (theNode.getNextSibling() != null) {
                 theNode = (RegexTreeNode) theNode.getNextSibling();
             }
         }
         return theNode;
     }
-
     @Override
     public String toString() {
         return this.value + ":" + this.type;
     }
+
+    // 成员变量作为后序遍历得到的字符串
+    private StringBuilder sb = new StringBuilder();
+
+    public StringBuilder postTraversal(RegexTreeNode node) {
+        if (node != null) {
+            if (node.getFirstChild() != null)
+                postTraversal((RegexTreeNode) node.getFirstChild());
+            if (node.getNextSibling() != null)
+                postTraversal((RegexTreeNode) node.getNextSibling());
+            sb.append(node.value);
+        }
+        return sb;
+    }
+
 }
+

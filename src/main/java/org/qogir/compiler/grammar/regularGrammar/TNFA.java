@@ -3,6 +3,8 @@ package org.qogir.compiler.grammar.regularGrammar;
 import org.qogir.compiler.FA.FiniteAutomaton;
 import org.qogir.compiler.FA.State;
 
+import javax.management.InstanceAlreadyExistsException;
+
 /**
  * A nondeterministic finite automaton (NFA) is a 5-tuple (S,∑,F,s0,sf). Here,
  *   S - a finite set of state. i.e The vertex set of transition graph of NFA
@@ -45,6 +47,8 @@ public class TNFA extends FiniteAutomaton {
 
     //NFA连接操作
     public void concat(TNFA another_nfa){
+        this.getAcceptingState().setType(1);
+        another_nfa.getStartState().setType(1);
         this.transitTable.merge(another_nfa.transitTable);
         //添加连接边
         this.transitTable.addEdge(this.getAcceptingState(), another_nfa.getStartState(), 'ε');
@@ -54,8 +58,14 @@ public class TNFA extends FiniteAutomaton {
 
     //NFA | 操作
     public void or(TNFA another_nfa){
+        this.getStartState().setType(1);
+        this.getAcceptingState().setType(1);
+        another_nfa.getStartState().setType(1);
+        another_nfa.getAcceptingState().setType(1);
         //设置新的开始状态
+
         State new_state =new State();
+        new_state.setType(0);
         //添加新状态的转换条件
         this.transitTable.addVertex(new_state);
         this.transitTable.addEdge(new_state, this.getStartState(), 'ε');
@@ -66,6 +76,7 @@ public class TNFA extends FiniteAutomaton {
         this.transitTable.merge(another_nfa.transitTable);
         //设置新结束状态
         State new_accept_state = new State();
+        new_accept_state.setType(2);
         this.transitTable.addVertex(new_accept_state);
         this.transitTable.addEdge(this.getAcceptingState(), new_accept_state, 'ε');
         this.transitTable.addEdge(another_nfa.getAcceptingState(), new_accept_state, 'ε');
@@ -74,9 +85,13 @@ public class TNFA extends FiniteAutomaton {
 
     //闭包操作
     public void kneel(){
+        this.getStartState().setType(1);
+        this.getAcceptingState().setType(1);
         //set the new state we need
         State start_state = new State();
         State accept_state = new State();
+        start_state.setType(0);
+        accept_state.setType(2);
         //add start_state in table
         this.transitTable.addVertex(start_state);
         this.transitTable.addEdge(start_state, this.getStartState(), 'ε');

@@ -1,5 +1,8 @@
 package org.qogir.compiler.util.tree;
 
+import org.qogir.compiler.grammar.regularGrammar.RegexTreeNode;
+
+import javax.swing.tree.TreeNode;
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -10,12 +13,12 @@ public class DefaultTreeNode implements Serializable {
     private DefaultTreeNode firstChild;
     private DefaultTreeNode nextSibling;
 
-    public DefaultTreeNode(){
+    public DefaultTreeNode() {
         this.firstChild = null;
         this.nextSibling = null;
     }
 
-    public DefaultTreeNode(DefaultTreeNode firstChild, DefaultTreeNode nextSibling){
+    public DefaultTreeNode(DefaultTreeNode firstChild, DefaultTreeNode nextSibling) {
         this.firstChild = firstChild;
         this.nextSibling = nextSibling;
     }
@@ -25,7 +28,7 @@ public class DefaultTreeNode implements Serializable {
     }
 
     public DefaultTreeNode getFirstChild() {
-        return firstChild;
+        return this.firstChild;
     }
 
     public void setNextSibling(DefaultTreeNode nextSibling) {
@@ -33,6 +36,12 @@ public class DefaultTreeNode implements Serializable {
     }
 
     public DefaultTreeNode getNextSibling() {
-        return nextSibling;
+        return this.nextSibling;
     }
+
 }
+
+
+
+
+

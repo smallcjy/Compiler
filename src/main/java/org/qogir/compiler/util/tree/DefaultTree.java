@@ -25,4 +25,5 @@ public class DefaultTree<N> implements Serializable {
         this.root = root;
     }
 
+
 }
