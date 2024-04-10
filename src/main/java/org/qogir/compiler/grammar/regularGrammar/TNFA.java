@@ -45,68 +45,7 @@ public class TNFA extends FiniteAutomaton {
         this.acceptingState = acceptingState;
     }
 
-    //NFA连接操作
-    public void concat(TNFA another_nfa){
-        this.getAcceptingState().setType(1);
-        another_nfa.getStartState().setType(1);
-        this.transitTable.merge(another_nfa.transitTable);
-        //添加连接边
-        this.transitTable.addEdge(this.getAcceptingState(), another_nfa.getStartState(), 'ε');
-        //更新接受状态
-        this.acceptingState = another_nfa.getAcceptingState();
-    }
 
-    //NFA | 操作
-    public void or(TNFA another_nfa){
-        this.getStartState().setType(1);
-        this.getAcceptingState().setType(1);
-        another_nfa.getStartState().setType(1);
-        another_nfa.getAcceptingState().setType(1);
-        //设置新的开始状态
-
-        State new_state =new State();
-        new_state.setType(0);
-        //添加新状态的转换条件
-        this.transitTable.addVertex(new_state);
-        this.transitTable.addEdge(new_state, this.getStartState(), 'ε');
-        this.transitTable.addEdge(new_state, another_nfa.getStartState(), 'ε');
-        //set start state
-        this.startState = new_state;
-        //merge
-        this.transitTable.merge(another_nfa.transitTable);
-        //设置新结束状态
-        State new_accept_state = new State();
-        new_accept_state.setType(2);
-        this.transitTable.addVertex(new_accept_state);
-        this.transitTable.addEdge(this.getAcceptingState(), new_accept_state, 'ε');
-        this.transitTable.addEdge(another_nfa.getAcceptingState(), new_accept_state, 'ε');
-        this.acceptingState = new_accept_state;
-    }
-
-    //闭包操作
-    public void kneel(){
-        this.getStartState().setType(1);
-        this.getAcceptingState().setType(1);
-        //set the new state we need
-        State start_state = new State();
-        State accept_state = new State();
-        start_state.setType(0);
-        accept_state.setType(2);
-        //add start_state in table
-        this.transitTable.addVertex(start_state);
-        this.transitTable.addEdge(start_state, this.getStartState(), 'ε');
-        //add accept_state in table
-        this.transitTable.addVertex(accept_state);
-        this.transitTable.addEdge(this.getAcceptingState(), accept_state, 'ε');
-
-        this.transitTable.addEdge(this.getAcceptingState(), this.getStartState(), 'ε');
-
-        //set new start stare and accept state
-        this.startState = start_state;
-        this.acceptingState = accept_state;
-        //add the edge we need next
-        this.transitTable.addEdge(this.getStartState(), this.getAcceptingState(), 'ε');
-    }
 }
 
 
