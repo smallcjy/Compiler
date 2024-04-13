@@ -56,11 +56,11 @@ public class ParseRegex {
 
         if(!Character.isLetter(look) &&  look != '('){ //look != 'ε' &&
             //The first char must be a letter, ε or '('
-            System.out.println("not a legal regex!(It must begin with a letter,ε or (.)");
+            System.out.println("It's not a legal regex!(It must begin with a letter,ε or (.).");
             return null;
         }
         else if(look == '%'){
-            System.out.println("a NULL regex!");
+            System.out.println("It's a NULL regex!");
             return null;
         }
 
@@ -68,7 +68,7 @@ public class ParseRegex {
         if(Character.isLetter(look) || look == 'ε'){
             t=0;
             if(Character.isLetter(this.queue.getFirst())){
-                System.out.println("Wrong retex!");
+                System.out.println("It's wrong regex!");
                 return null;
             }
         }
@@ -89,7 +89,7 @@ public class ParseRegex {
                     knode = new RegexTreeNode('*',3,stack.pop(),null);
                     stack.pop(); //pop '('
                 }else{ //is other char before *, not legal
-                    System.out.println("not a legal regex!(It must be ')");
+                    System.out.println("It's not a legal regex!(It must be ')");
                     return null;
                 }
                 stack.push(knode);
@@ -117,7 +117,7 @@ public class ParseRegex {
                         }
                         else if(stack.peek().getType() == 2){//union, case (stack|?)
                             if(rstack.size() == 0){ //case (stack|)
-                                System.out.println("not a legal regex '|)'");
+                                System.out.println("It's not a legal regex '|)'");
                                 return null;
                             }
 
@@ -214,7 +214,7 @@ public class ParseRegex {
                 stack.push(bnode);
             }
             else {
-                System.out.println("have illegal character or operator!");
+                System.out.println("The regex has illegal character or operator!");
                 return null;
             }
 
@@ -272,6 +272,7 @@ public class ParseRegex {
         if(treeStack.size()>1){
             RegexTreeNode treeNode = new RegexTreeNode('-',1,null,null);
             treeNode = mergeStackAsOneChild(treeNode,treeStack);
+
             tree.setRoot(treeNode);
         }
         else{
