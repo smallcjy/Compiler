@@ -65,8 +65,13 @@ public class ParseRegex {
         }
 
         int t;
-        if(Character.isLetter(look) || look == 'ε')
+        if(Character.isLetter(look) || look == 'ε'){
             t=0;
+            if(Character.isLetter(this.queue.getFirst())){
+                System.out.println("Wrong retex!");
+                return null;
+            }
+        }
         else t=4;
         RegexTreeNode node = new RegexTreeNode(look,t,null,null);
         stack.push(node);
@@ -207,6 +212,10 @@ public class ParseRegex {
             else if(Character.isLetter(look) || look == 'ε'){
                 RegexTreeNode bnode = new RegexTreeNode(look,0,null,null);
                 stack.push(bnode);
+            }
+            else {
+                System.out.println("have illegal character or operator!");
+                return null;
             }
 
             look = this.queue.poll();
