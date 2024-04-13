@@ -52,20 +52,5 @@ public class RegexTreeNode extends DefaultTreeNode {
     public String toString() {
         return this.value + ":" + this.type;
     }
-
-    // 成员变量作为后序遍历得到的字符串
-    private StringBuilder sb = new StringBuilder();
-
-    public StringBuilder postTraversal(RegexTreeNode node) {
-        if (node != null) {
-            if (node.getFirstChild() != null)
-                postTraversal((RegexTreeNode) node.getFirstChild());
-            if (node.getNextSibling() != null)
-                postTraversal((RegexTreeNode) node.getNextSibling());
-            sb.append(node.value);
-        }
-        return sb;
-    }
-
 }
 
