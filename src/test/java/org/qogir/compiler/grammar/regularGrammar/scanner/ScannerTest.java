@@ -28,9 +28,9 @@ public class ScannerTest {
 
         System.out.println("Show the DFA:");
         //test constructing the DFA
-
-        System.out.println(scanner.constructDFA(scanner.constructNFA()).toString());
-        System.out.println(scanner.constructDFA(scanner.constructNFA()).StateMappingBetweenDFAAndNFAToString());
+        RDFA nfa = scanner.constructDFA(scanner.constructNFA());
+        System.out.println(nfa.toString());
+        System.out.println(nfa.StateMappingBetweenDFAAndNFAToString());
         //System.out.println("Show the miniDFA:");
         //test minimizing the DFA
         //State.STATE_ID = 0;
