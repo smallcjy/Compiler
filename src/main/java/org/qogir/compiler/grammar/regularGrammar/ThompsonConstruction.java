@@ -14,53 +14,84 @@ public class ThompsonConstruction {
         return tnfa;
     }
 
-    private  TNFA arrayItemNfa(ArrayDeque<RegexTreeNode> array){
-        // 根据节点的值执行相应的操作
-        RegexTreeNode node = array.poll();
+//    private  TNFA arrayItemNfa(ArrayDeque<RegexTreeNode> array){
+//        // 根据节点的值执行相应的操作
+//        RegexTreeNode node = array.poll();
+//        switch (node.getType()) {
+//            case 0 -> { // node is letter
+//                TNFA subTnfa = new TNFA();
+//                subTnfa.getTransitTable().addEdge(subTnfa.getStartState(), subTnfa.getAcceptingState(), node.getValue());
+//                return subTnfa;
+//            }
+//            case 1 -> { // node is concatenation
+//                TNFA leftnode = arrayItemNfa(array);
+//                TNFA rightnode = arrayItemNfa(array);
+//                return concat(leftnode, rightnode);
+//            }
+//            case 2 -> { // node is union
+//                TNFA leftnode = arrayItemNfa(array);
+//                TNFA rightnode = arrayItemNfa(array);
+//                return or(leftnode, rightnode);
+//            }
+//            case 3 -> { // node is kleene closure
+//                TNFA cur_node = arrayItemNfa(array);
+//                return kneel(cur_node);
+//            }
+//        }
+//        return new TNFA();
+//    }
+    private TNFA opNode(RegexTreeNode node, TNFA result){
+        if (node ==null) {
+            return null;
+        }
         switch (node.getType()) {
-            case 0 -> { // node is letter
+            case 0 -> {// node is letter
                 TNFA subTnfa = new TNFA();
                 subTnfa.getTransitTable().addEdge(subTnfa.getStartState(), subTnfa.getAcceptingState(), node.getValue());
                 return subTnfa;
             }
-            case 1 -> { // node is concatenation
-                TNFA leftnode = arrayItemNfa(array);
-                TNFA rightnode = arrayItemNfa(array);
-                return concat(leftnode, rightnode);
+            case 1 -> {
+                result = concat(result, opNode((RegexTreeNode) node.getFirstChild(), result));
+                RegexTreeNode cur = (RegexTreeNode) node.getFirstChild();
+                while(cur.getNextSibling() != null){
+                    result = concat(result, opNode((RegexTreeNode) cur.getNextSibling(), result));
+                    cur = (RegexTreeNode) cur.getNextSibling();
+                }
+                return result;
             }
-            case 2 -> { // node is union
-                TNFA leftnode = arrayItemNfa(array);
-                TNFA rightnode = arrayItemNfa(array);
-                return or(leftnode, rightnode);
+            case 2 -> {
+                result = or(opNode((RegexTreeNode) node.getFirstChild(),result), opNode((RegexTreeNode) node.getFirstChild().getNextSibling(),result));
+                return result;
             }
-            case 3 -> { // node is kleene closure
-                TNFA cur_node = arrayItemNfa(array);
-                return kneel(cur_node);
+            case 3 -> {
+                result = kneel(opNode((RegexTreeNode) node.getFirstChild(), result));
+                return result;
             }
         }
-        return new TNFA();
+        return null;
     }
+
+//    private void preOrderTraverse(RegexTreeNode node, ArrayDeque<RegexTreeNode> result) {
+//        if(node != null) {
+//            result.addLast(node);
+//            preOrderTraverse((RegexTreeNode) node.getFirstChild(), result);
+//            preOrderTraverse((RegexTreeNode) node.getNextSibling(), result);
+//        }
+//    }
     private TNFA RTNodeToNFA(RegexTreeNode node, ArrayDeque<RegexTreeNode> array) {
         if (node == null) {
             return null;
         }
-        ArrayDeque<RegexTreeNode> list = new ArrayDeque<>();
-        list.push(node);
-        while (!list.isEmpty()) {
-            RegexTreeNode first_node = list.getFirst();
-            if (first_node.getFirstChild() != null) {
-                list.addLast((RegexTreeNode) first_node.getFirstChild());
-            }
-            if (first_node.getNextSibling() != null) {
-                list.addLast((RegexTreeNode) first_node.getNextSibling());
-            }
-            array.addLast(list.poll());
-        }
-        return arrayItemNfa(array);
+        TNFA result = null;
+        result = opNode(node, result);
+        return result;
+//        preOrderTraverse(node, array);
+//        return arrayItemNfa(array);
     }
 
     //NFA连接操作
     public TNFA concat(TNFA nfa, TNFA another_nfa){
+        if(nfa == null) return another_nfa;
         TNFA result = new TNFA();
         nfa.getAcceptingState().setType(1);
         another_nfa.getStartState().setType(1);
@@ -75,6 +106,7 @@ public class ThompsonConstruction {
 
     //NFA | 操作
     public TNFA or(TNFA nfa, TNFA another_nfa){
+        if(nfa == null) return another_nfa;
         TNFA result = new TNFA();
         nfa.getStartState().setType(1);
         nfa.getAcceptingState().setType(1);

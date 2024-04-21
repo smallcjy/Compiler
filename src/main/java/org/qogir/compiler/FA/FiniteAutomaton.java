@@ -64,6 +64,7 @@ public class FiniteAutomaton implements Serializable {
         for (LabelEdge edge : transitTable.edgeSet()){
             faInfo.append("(").append(edge.toString()).append(")\n") ;
         }
+
         return faInfo.toString();
     }
 

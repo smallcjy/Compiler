@@ -11,7 +11,7 @@ public class ScannerTest {
 //        String[] regexes = new String[]{"regex0 := a|ε","regex1 := c(a|b)*"}; //{"regex1 := c(a|b)*"};//{"regex0 := a|ε","regex1 := c(a|b)*"};//"regex1 := c(a|b)*","regex2 := d(f|ea*(g|h))b","c(a|b)*","a|b", "ab*", "d(f|e)","d(f|ea*(g|h))b","c(a|b)*"
         //测试数据
         //1、
-        String[] regexes = new String[]{"regex1 := c(a|b)*"};
+        String[] regexes = new String[]{"regex1 := (a|b)*abb"};
         //test defining a regular grammar
         RegularGrammar rg = new RegularGrammar(regexes);
 
@@ -20,16 +20,17 @@ public class ScannerTest {
         Scanner scanner = new Scanner(rg);
 
         //test constructing the regex tree
-        System.out.println(scanner.constructRegexTrees().toString());
+        //System.out.println(scanner.constructRegexTrees().toString());
 
-        System.out.println("Show the NFA:");
+        //System.out.println("Show the NFA:");
         //test constructing the NFA
-        System.out.println(scanner.constructNFA().toString());
+        //System.out.println(scanner.constructNFA().toString());
 
-        //System.out.println("Show the DFA:");
+        System.out.println("Show the DFA:");
         //test constructing the DFA
 
-        //System.out.println(scanner.constructDFA(scanner.constructNFA()).toString());
+        System.out.println(scanner.constructDFA(scanner.constructNFA()).toString());
+        System.out.println(scanner.constructDFA(scanner.constructNFA()).StateMappingBetweenDFAAndNFAToString());
         //System.out.println("Show the miniDFA:");
         //test minimizing the DFA
         //State.STATE_ID = 0;
