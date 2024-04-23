@@ -11,7 +11,7 @@ public class ScannerTest {
 //        String[] regexes = new String[]{"regex0 := a|ε","regex1 := c(a|b)*"}; //{"regex1 := c(a|b)*"};//{"regex0 := a|ε","regex1 := c(a|b)*"};//"regex1 := c(a|b)*","regex2 := d(f|ea*(g|h))b","c(a|b)*","a|b", "ab*", "d(f|e)","d(f|ea*(g|h))b","c(a|b)*"
         //测试数据
         //1、
-        String[] regexes = new String[]{"regex1 := (a|b)*abb"};
+        String[] regexes = new String[]{"regex1 := c(a|b)*"};
         //test defining a regular grammar
         RegularGrammar rg = new RegularGrammar(regexes);
 
