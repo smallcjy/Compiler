@@ -11,15 +11,18 @@ public class RDFA extends FiniteAutomaton {
     /**
      * holds the maps between DFA states and NFA state sets
      */
+    private  State acceptingState = new State();
     private HashMap<State, HashMap<Integer,State>> StateMappingBetweenDFAAndNFA = new HashMap<>();
     public RDFA(){
         super();
+        acceptingState.setType(State.ACCEPT);
         this.StateMappingBetweenDFAAndNFA = new HashMap<>();
         this.transitTable = new LabeledDirectedGraph<>();
     }
 
     public RDFA(State startState){
         this.startState = startState;
+        acceptingState.setType(State.ACCEPT);
         this.StateMappingBetweenDFAAndNFA = new HashMap<>();
         this.transitTable = new LabeledDirectedGraph<>();
         this.getTransitTable().addVertex(this.startState);
@@ -48,5 +51,11 @@ public class RDFA extends FiniteAutomaton {
             str += mapping;
         }
         return str;
+    }
+
+    public State getAcceptingState() {return acceptingState;};
+
+    public void setAcceptingState(State acceptingState) {
+        this.acceptingState = acceptingState;
     }
 }

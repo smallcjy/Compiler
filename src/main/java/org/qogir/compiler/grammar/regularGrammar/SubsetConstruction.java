@@ -115,6 +115,13 @@ public class SubsetConstruction {
         return false;
     }
 
+    private boolean isAcceptState(HashMap<Integer, State> sS) {
+        for(Integer s : sS.keySet()) {
+            if(sS.get(s).getType() == 2) return true;
+        }
+        return false;
+    }
+
     public RDFA subSetConstruct(TNFA tnfa){
         RDFA result = new RDFA();
         result.getTransitTable().addVertex(result.getStartState());
@@ -145,12 +152,14 @@ public class SubsetConstruction {
                         }
                     });
                 } else {
-                    //Todo: 图的遍历出不来，标记已经经过的节点
                     State newState = new State();
                     result.getTransitTable().addVertex(newState);
                     result.getTransitTable().addEdge(scur,newState,ch);
                     result.getStateMappingBetweenDFAAndNFA().put(newState, item);
                     dstate.add(newState);
+                    if(isAcceptState(item)) {
+                        result.setAcceptingState(newState);
+                    }
                 }
             });
             cur_index.addAndGet(1);
