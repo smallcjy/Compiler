@@ -158,8 +158,10 @@ public class SubsetConstruction {
                     result.getStateMappingBetweenDFAAndNFA().put(newState, item);
                     dstate.add(newState);
                     if(isAcceptState(item)) {
+                        newState.setType(State.ACCEPT);
                         result.setAcceptingState(newState);
                     }
+
                 }
             });
             cur_index.addAndGet(1);
