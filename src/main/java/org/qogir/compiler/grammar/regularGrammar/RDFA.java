@@ -58,4 +58,6 @@ public class RDFA extends FiniteAutomaton {
     public void setAcceptingState(State acceptingState) {
         this.acceptingState = acceptingState;
     }
+
+//    public
 }

@@ -107,6 +107,7 @@ public class SubsetConstruction {
     }
 
     private  boolean contain(HashMap<State, HashMap<Integer, State>> s, HashMap<Integer, State> value){
+        if(value.isEmpty()) return true;
         for (State i : s.keySet()) {
             if(equal(s.get(i), value)) {
                 return true;
@@ -121,6 +122,8 @@ public class SubsetConstruction {
         }
         return false;
     }
+
+
 
     public RDFA subSetConstruct(TNFA tnfa){
         RDFA result = new RDFA();

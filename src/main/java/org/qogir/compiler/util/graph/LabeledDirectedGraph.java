@@ -2,7 +2,9 @@ package org.qogir.compiler.util.graph;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class LabeledDirectedGraph<V> implements Serializable {
@@ -15,6 +17,9 @@ public class LabeledDirectedGraph<V> implements Serializable {
     public LabeledDirectedGraph(){
         this.vertexSet = new HashSet<>();
         this.edgeSet = new HashSet<>();
+
+        //新增
+//        outgoingEdges = new HashMap<>();
     }
 
     public Set<V> vertexSet(){
@@ -109,4 +114,8 @@ public class LabeledDirectedGraph<V> implements Serializable {
         }
         return (edgeSet.addAll(graph.edgeSet()));
     }
+
+    //新增
+//    private Map<V, Set<LabelEdge>> outgoingEdges;
+
 }
